@@ -1,5 +1,5 @@
 # PPPwnUI
-PPPwnUI is a program that adds an UI to the exploit PPPwn created by TheFlow.
+PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/TheOfficialFloW/PPPwn/) created by [TheFlow](https://github.com/TheOfficialFloW/).
 
 ## Installation
 
