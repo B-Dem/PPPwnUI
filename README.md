@@ -123,5 +123,5 @@ If the exploit fails or the PS4 crashes, you can skip the internet setup and sim
 [+] Done!
 ```
 
-This Program was made with ❤️ by (Memz)[https://github.com/B-Dem]
+This Program was made with ❤️ by [Memz](https://github.com/B-Dem)
 If you find this program helpful, leave a star on the repo !
