@@ -19,7 +19,7 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Select your Interface using the drop-down menu
 
-- Choose your Firmware (9.00 or 11.00)
+- Choose your Firmware (9.00, 9.03, 9.04, 10.00, 10.01 or 11.00)
 
 - Click on **Start PPPwn** to start the Exploit
 

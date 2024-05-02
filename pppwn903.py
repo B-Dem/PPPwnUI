@@ -821,8 +821,8 @@ def main():
     parser = ArgumentParser('pppwn.py')
     parser.add_argument('--interface', required=True)
     parser.add_argument('--fw', choices=['900', '903', '904', '1000', '1001', '1100'], default='1100')
-    parser.add_argument('--stage1', default='stage1/900/stage1.bin')
-    parser.add_argument('--stage2', default='stage2/900/stage2.bin')
+    parser.add_argument('--stage1', default='stage1/903/stage1.bin')
+    parser.add_argument('--stage2', default='stage2/903/stage2.bin')
     args = parser.parse_args()
 
     print('[+] PPPwn - PlayStation 4 PPPoE RCE by theflow')
