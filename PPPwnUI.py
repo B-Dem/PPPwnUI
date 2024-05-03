@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox, scrolledtext
 import psutil
 import subprocess
+import os
+import sys
 
 def get_network_interface_names():
     interfaces = psutil.net_if_addrs()
@@ -91,6 +93,10 @@ class App:
 
     def about(self):
         messagebox.showinfo("About", "PPPwnUI v1.1\nThis app was developped by Memz for Sighya to make PPPwn easier to use.")
+
+if sys.platform == "linux" and not os.geteuid() == 0:
+    print("You must run this program as administrator.")
+    sys.exit(1)
 
 root = tk.Tk()
 app = App(root)
