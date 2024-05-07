@@ -124,7 +124,7 @@ If the exploit fails or the PS4 crashes, you can skip the internet setup and sim
 [*] Sending stage2 payload...
 [+] Done!
 ```
-##To do : 
+## To do : 
 
 - Auto Updater
 - PPPwn Logs in the program directly
