@@ -12,10 +12,6 @@ def get_network_interface_names():
 class App:
     def __init__(self, master):
 
-        if sys.platform == "linux" and not os.geteuid() == 0:
-            print("You must run this program as administrator.")
-            sys.exit(1)
-
         self.master = master
         master.title("PPwnUI v2.0 By Memz")
 
