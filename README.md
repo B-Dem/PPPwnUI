@@ -19,7 +19,9 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Select your Interface using the drop-down menu
 
-- Choose your Firmware (9.00, 9.03, 9.04, 10.00, 10.01 or 11.00)
+- Choose your Firmware (7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01 or 11.00)
+
+- You can also add your own custom Payloads. 
 
 - Click on **Start PPPwn** to start the Exploit
 
@@ -122,7 +124,14 @@ If the exploit fails or the PS4 crashes, you can skip the internet setup and sim
 [*] Sending stage2 payload...
 [+] Done!
 ```
+##To do : 
+
+- Auto Updater
+- PPPwn Logs in the program directly
+- Code optimisation
 
 This Program was made with ❤️ by [Memz](https://github.com/B-Dem) for [Sighya](https://sighya.fr).
 
 If you find this program helpful, leave a star on the repo!
+
+And if you got any feedback, open an issues !
