@@ -13,7 +13,7 @@ class App:
     def __init__(self, master):
 
         self.master = master
-        master.title("PPwnUI v2.01 By Memz")
+        master.title("PPPwnUI v2.01 By Memz")
 
         # taille de la fenêtre
         master.geometry("400x380")
@@ -42,7 +42,7 @@ class App:
         
         # Menu déroulant pour les interfaces réseau
         self.interface_var = tk.StringVar(master)
-        self.interface_var.set("Select an interface :")
+        self.interface_var.set("Select an interface :") # .set("Ethernet") Réseau pré-sélectionné
         self.interface_menu = tk.OptionMenu(master, self.interface_var, *get_network_interface_names())
         self.interface_menu.pack()
 
