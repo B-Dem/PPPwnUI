@@ -834,7 +834,7 @@ def main():
                             '1000', '1001', '1050', '1070', '1071',
                             '1100'
                         ],
-                        default='1100')
+                        default='750')
     parser.add_argument('--stage1', default='PPPwn/stage1/750/stage1.bin')
     parser.add_argument('--stage2', default='PPPwn/stage2/750/stage2.bin')
     args = parser.parse_args()
