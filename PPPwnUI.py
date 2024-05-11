@@ -12,7 +12,7 @@ def get_network_interface_names():
 class App:
     def __init__(self, master):
         self.master = master
-        master.title("PPPwnUI v2.01 By Memz")
+        master.title("PPPwnUI v2.1 By Memz")
 
         # taille de la fenêtre
         master.geometry("400x380")
