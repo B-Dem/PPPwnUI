@@ -13,10 +13,14 @@ class App:
     def __init__(self, master):
 
         self.master = master
-        master.title("PPwnUI v2.0 By Memz")
+        master.title("PPPwnUI v2.01 By Memz")
 
         # taille de la fenêtre
-        master.geometry("400x500")
+        master.geometry("400x380")
+        # master.eval('tk::PlaceWindow . center')
+
+        #Set the resizable property False
+        master.resizable(False, False)
 
         # logo d'application
         master.iconbitmap("media/logo.ico")
@@ -25,23 +29,20 @@ class App:
         master.config(menu=self.menu)
 
         self.file_menu = tk.Menu(self.menu, tearoff=0)
-        self.menu.add_cascade(label="Menu", menu=self.file_menu)
-        self.file_menu.add_command(label="Leave App", command=master.quit)
+        self.menu.add_cascade(label="File", menu=self.file_menu)
+        self.file_menu.add_command(label="Exit", command=master.quit)
 
         self.exploit_menu = tk.Menu(self.menu, tearoff=0)
         self.menu.add_cascade(label="PPPwn", menu=self.exploit_menu)
-        self.exploit_menu.add_command(label="Start PPPwn", command=self.start_pppwn)
+        self.exploit_menu.add_command(label="  Start PPPwn > ", command=self.start_pppwn)
 
         self.help_menu = tk.Menu(self.menu, tearoff=0)
-        self.menu.add_cascade(label="More", menu=self.help_menu)
+        self.menu.add_cascade(label="Help", menu=self.help_menu)
         self.help_menu.add_command(label="About", command=self.about)
         
-        self.label = tk.Label(master, text="Select an interface :")
-        self.label.pack()
-
         # Menu déroulant pour les interfaces réseau
         self.interface_var = tk.StringVar(master)
-        self.interface_var.set("Select an interface :")
+        self.interface_var.set("Select an interface :") # .set("Ethernet") Réseau pré-sélectionné
         self.interface_menu = tk.OptionMenu(master, self.interface_var, *get_network_interface_names())
         self.interface_menu.pack()
 
@@ -52,14 +53,17 @@ class App:
         self.columns_container.pack()
 
         # Firmwares avec noms des versions
-        firmware_versions = ["7.50", "7.51", "7.55", "8.00", "8.01", "8.03", "9.00", "9.03", "9.04", "9.50", "9.51", "9.60", "10.00", "10.01", "11.00", "Custom"]
+        firmware_versions = ["7.50", "7.51", "7.55", "8.00", "8.01", "8.03", "8.50", "8.52", "Custom", "9.00", "9.03", "9.04", "9.50", "9.51", "9.60", "10.00", "10.01", "10.50", "10.70", "10.71", "11.00"]
 
         self.firmware_var = tk.StringVar(master)
-        self.firmware_var.set("7.50")  # Firmware pré-sélectionné
+        self.firmware_var.set("11.00")  # Firmware pré-sélectionné
 
         # Création boutons radio pour chaque firmware dans les colonnes gauche & droite
         self.left_column = tk.Frame(self.columns_container)
         self.left_column.pack(side=tk.LEFT)
+
+        self.middle_column = tk.Frame(self.columns_container)
+        self.middle_column.pack(side=tk.LEFT)
 
         self.right_column = tk.Frame(self.columns_container)
         self.right_column.pack(side=tk.RIGHT)
@@ -67,7 +71,7 @@ class App:
         column_counter = 0
 
         for firmware in firmware_versions:
-            radio_button = tk.Radiobutton(self.left_column if column_counter % 2 == 0 else self.right_column, text=firmware, variable=self.firmware_var, value=firmware, command=self.show_payload_options if firmware == "Custom" else None)
+            radio_button = tk.Radiobutton(self.left_column if column_counter % 3 == 0 else self.middle_column if column_counter % 3 == 1 else self.right_column, text=firmware, variable=self.firmware_var, value=firmware, command=self.show_payload_options)
             radio_button.pack(anchor=tk.W)
             column_counter += 1
 
@@ -102,7 +106,7 @@ class App:
         self.stage2_browse_button.grid(row=1, column=2, padx=5)
 
         # Start PPPwn
-        self.start_button = tk.Button(master, text="Start PPPwn", command=self.start_pppwn)
+        self.start_button = tk.Button(master, text="  Start PPPwn > ", bg='white',fg='blue', font = ('Sans','10','bold'), command=self.start_pppwn)
         self.start_button.pack(side=tk.BOTTOM, pady=10)
 
     def show_payload_options(self):
@@ -127,6 +131,10 @@ class App:
 
         stage1_path = self.stage1_path.get()
         stage2_path = self.stage2_path.get()
+
+        if interface == "Select an interface :":
+            messagebox.showerror("Error", "Select a network interface")
+            return
 
         if firmware == "Custom":
             command = f'python PPPwn/pppwn.py --interface="{interface}" --stage1="{stage1_path}" --stage2="{stage2_path}"'

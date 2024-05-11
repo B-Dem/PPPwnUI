@@ -19,7 +19,7 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Select your Interface using the drop-down menu
 
-- Choose your Firmware (7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01 or 11.00)
+- Choose your Firmware (7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 or 11.00)
 
 - You can also add your own custom Payloads. 
 
@@ -30,6 +30,7 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 On your PS4:
 
+- Copy `goldhen.bin` to the root directory of an exfat USB and insert it into PS4
 - Go to `Settings` and then `Network`
 - Select `Set Up Internet connection` and choose `Use a LAN Cable`
 - Choose `Custom` setup and choose `PPPoE` for `IP Address Settings`
