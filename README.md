@@ -21,6 +21,8 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Choose your Firmware (7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 or 11.00)
 
+- Or Choose the Goldhen PPPwn (9.00 & 11.00)
+
 - You can also add your own custom Payloads. 
 
 - Click on **Start PPPwn** to start the Exploit
@@ -30,7 +32,6 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 On your PS4:
 
-- Copy `goldhen.bin` to the root directory of an exfat USB and insert it into PS4
 - Go to `Settings` and then `Network`
 - Select `Set Up Internet connection` and choose `Use a LAN Cable`
 - Choose `Custom` setup and choose `PPPoE` for `IP Address Settings`
@@ -41,7 +42,13 @@ On your PS4:
 
 If the exploit fails or the PS4 crashes, you can skip the internet setup and simply click on `Test Internet Connection`. If the script fail or is stuck waiting for a request/response, abort it and run it again on your computer, and then click on `Test Internet Connection` on your PS4.
 
-### Example run
+### Goldhen Usage
+
+On your Computer: 
+
+- Copy `goldhen.bin` to the root directory of an exfat/fat32 USB and insert it into your PS4.
+
+#### Example run
 
 ```sh
 [+] PPPwn - PlayStation 4 PPPoE RCE by theflow
@@ -125,7 +132,7 @@ If the exploit fails or the PS4 crashes, you can skip the internet setup and sim
 [*] Sending stage2 payload...
 [+] Done!
 ```
-## To do : 
+##### To do : 
 
 - Auto Updater
 - PPPwn Logs in the program directly
