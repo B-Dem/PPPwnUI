@@ -5,6 +5,10 @@ import subprocess
 import os
 import sys
 
+CUSTOM = "Custom"
+GOLDHEN_900 = "Goldhen for 9.00"
+GOLDHEN_1100 = "Goldhen for 11.00"
+
 def get_network_interface_names():
     interfaces = psutil.net_if_addrs()
     return interfaces.keys()
@@ -59,7 +63,7 @@ class App:
         self.goldhen_radio_button = tk.Radiobutton(self.radio_frame, text="PPPwn Goldhen", variable=self.radio_var, value="PPPwn Goldhen", command=self.update_firmware_options)
         self.goldhen_radio_button.pack(side=tk.LEFT, padx=5)
 
-        self.custom_radio_button = tk.Radiobutton(self.radio_frame, text="Custom", variable=self.radio_var, value="Custom", command=self.update_firmware_options)
+        self.custom_radio_button = tk.Radiobutton(self.radio_frame, text=CUSTOM, variable=self.radio_var, value=CUSTOM, command=self.update_firmware_options)
         self.custom_radio_button.pack(side=tk.LEFT, padx=5)
 
         # Conteneur pour les colonnes des firmwares
@@ -68,9 +72,12 @@ class App:
         self.columns_container = tk.Frame(master)
         self.columns_container.pack()
 
+        self.selected_fw1 = "11.00"
+        self.selected_fw2 = GOLDHEN_1100
+
         # Firmwares avec noms des versions
         self.firmware_var = tk.StringVar(master)
-        self.firmware_var.set("11.00")  # Firmware pré-sélectionné
+        self.firmware_var.set(self.selected_fw1)  # Firmware pré-sélectionné
 
         # Sélection payloads
         self.payload_frame = tk.Frame(master)
@@ -116,11 +123,25 @@ class App:
         # Mettre à jour les options de firmware en fonction de la sélection de l'utilisateur
         firmware_versions = self.get_firmware_options()
 
+        if self.firmware_var.get() == GOLDHEN_900:
+            self.selected_fw2 = self.firmware_var.get()
+        elif self.firmware_var.get() == GOLDHEN_1100:
+            self.selected_fw2 = self.firmware_var.get()
+        elif self.firmware_var.get() != CUSTOM:
+            self.selected_fw1 = self.firmware_var.get()
+
         # Créer les colonnes des boutons radio avec les nouvelles options de firmware
-        if self.radio_var.get() == "PPPwn":
-            num_columns = 3
-        else:
+        if self.radio_var.get() == CUSTOM:
             num_columns = 2
+            self.firmware_var.set(CUSTOM)
+            self.custom_payloads_frame.pack()
+        else:
+            num_columns = 3
+            self.custom_payloads_frame.pack_forget()
+            if self.radio_var.get() == "PPPwn":
+                self.firmware_var.set(self.selected_fw1)
+            else:
+                self.firmware_var.set(self.selected_fw2)
 
         column_widgets = []
         for firmware in firmware_versions:
@@ -132,19 +153,23 @@ class App:
             row_index = i // num_columns
             widget.grid(row=row_index, column=column_index, sticky="w")
 
+        self.show_payload_options
+
     def get_firmware_options(self):
         if self.radio_var.get() == "PPPwn":
             # Options de firmware pour PPPwn
-            return ["7.50", "7.51", "7.55", "8.00", "8.01", "8.03", "8.50", "8.52", "9.00", "9.03", "9.04", "9.50", "9.51", "9.60", "10.00", "10.01", "10.50", "10.70", "10.71", "11.00"]
+            return ["7.50", "7.51", "7.55", "8.00", "8.01", "8.03", "8.50", "8.52",
+                    "9.00", "9.03", "9.04", "9.50", "9.51", "9.60",
+                    "10.00", "10.01", "10.50", "10.70", "10.71", "11.00"]
         elif self.radio_var.get() == "PPPwn Goldhen":
             # Options de firmware pour PPPwn Goldhen
-            return ["Goldhen for 11.00", "Goldhen for 9.00"]
-        elif self.radio_var.get() == "Custom":
+            return [GOLDHEN_1100, GOLDHEN_900]
+        elif self.radio_var.get() == CUSTOM:
             # Options de firmware pour PPPwn Goldhen
-            return ["Custom"]
+            return [CUSTOM]
 
     def show_payload_options(self):
-        if self.firmware_var.get() == "Custom":
+        if self.firmware_var.get() == CUSTOM:
             self.payload_frame.pack()
             self.custom_payloads_frame.pack()
         else:
@@ -170,13 +195,13 @@ class App:
             messagebox.showerror("Error", "Select a network interface")
             return
 
-        if firmware == "Custom":
+        if firmware == CUSTOM:
             command = f'python PPPwn/pppwn.py --interface="{interface}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
         else:
-            if firmware == "Goldhen for 9.00":
+            if firmware == GOLDHEN_900:
                 command = f'python PPPwn/pppwngh900.py --interface="{interface}" --fw=900"'
             else:
-                if firmware == "Goldhen for 11.00":
+                if firmware == GOLDHEN_1100:
                     command = f'python PPPwn/pppwngh1100.py --interface="{interface}" --fw=1100"'
                 else:
                     firmware_value = firmware.replace(".", "")
