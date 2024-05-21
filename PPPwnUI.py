@@ -7,6 +7,8 @@ import sys
 
 CUSTOM = "Custom"
 GOLDHEN_900 = "Goldhen for 9.00"
+GOLDHEN_1000 = "Goldhen for 10.00"
+GOLDHEN_1001 = "Goldhen for 10.01"
 GOLDHEN_1100 = "Goldhen for 11.00"
 
 def get_network_interface_names():
@@ -16,10 +18,10 @@ def get_network_interface_names():
 class App:
     def __init__(self, master):
         self.master = master
-        master.title("PPPwnUI v2.1 By Memz")
+        master.title("PPPwnUI v3.0 by Memz (mod by aldostools)")
 
         # taille de la fenêtre
-        master.geometry("400x380")
+        master.geometry("420x380")
         #master.eval('tk::PlaceWindow . center')
 
         # Set the resizable property False
@@ -45,7 +47,7 @@ class App:
 
         # Menu déroulant pour les interfaces réseau
         self.interface_var = tk.StringVar(master)
-        self.interface_var.set("Select an interface :") # .set("Ethernet") Réseau pré-sélectionné
+        self.interface_var.set("Ethernet") # .set("Select an interface :") # Réseau pré-sélectionné
         self.interface_menu = tk.OptionMenu(master, self.interface_var, *get_network_interface_names())
         self.interface_menu.pack()
 
@@ -54,7 +56,7 @@ class App:
         self.radio_frame.pack()
 
         # Variables pour les boutons radio PPPwn et PPPwn Goldhen
-        self.radio_var = tk.StringVar(master, value="PPPwn")
+        self.radio_var = tk.StringVar(master, value="PPPwn Goldhen")
 
         # Création des boutons radio pour PPPwn et PPPwn Goldhen
         self.pppwn_radio_button = tk.Radiobutton(self.radio_frame, text="PPPwn", variable=self.radio_var, value="PPPwn", command=self.update_firmware_options)
@@ -112,6 +114,7 @@ class App:
         # Start PPPwn
         self.start_button = tk.Button(master, text="  Start PPPwn > ", bg='white',fg='blue', font = ('Sans','10','bold'), command=self.start_pppwn)
         self.start_button.pack(side=tk.BOTTOM, pady=10)
+        self.start_button.focus()
 
         self.update_firmware_options()  # Mettre à jour les options de firmware initiales
 
@@ -125,6 +128,10 @@ class App:
 
         if self.firmware_var.get() == GOLDHEN_900:
             self.selected_fw2 = self.firmware_var.get()
+        elif self.firmware_var.get() == GOLDHEN_1000:
+            self.selected_fw2 = self.firmware_var.get()
+        elif self.firmware_var.get() == GOLDHEN_1001:
+            self.selected_fw2 = self.firmware_var.get()
         elif self.firmware_var.get() == GOLDHEN_1100:
             self.selected_fw2 = self.firmware_var.get()
         elif self.firmware_var.get() != CUSTOM:
@@ -136,11 +143,12 @@ class App:
             self.firmware_var.set(CUSTOM)
             self.custom_payloads_frame.pack()
         else:
-            num_columns = 3
             self.custom_payloads_frame.pack_forget()
             if self.radio_var.get() == "PPPwn":
+                num_columns = 3
                 self.firmware_var.set(self.selected_fw1)
             else:
+                num_columns = 1
                 self.firmware_var.set(self.selected_fw2)
 
         column_widgets = []
@@ -158,12 +166,13 @@ class App:
     def get_firmware_options(self):
         if self.radio_var.get() == "PPPwn":
             # Options de firmware pour PPPwn
-            return ["7.50", "7.51", "7.55", "8.00", "8.01", "8.03", "8.50", "8.52",
+            return ["7.00", "7.01", "7.02", "7.50", "7.51", "7.55",
+                    "8.00", "8.01", "8.03", "8.50", "8.52",
                     "9.00", "9.03", "9.04", "9.50", "9.51", "9.60",
                     "10.00", "10.01", "10.50", "10.70", "10.71", "11.00"]
         elif self.radio_var.get() == "PPPwn Goldhen":
             # Options de firmware pour PPPwn Goldhen
-            return [GOLDHEN_1100, GOLDHEN_900]
+            return [GOLDHEN_900, GOLDHEN_1000, GOLDHEN_1001, GOLDHEN_1100]
         elif self.radio_var.get() == CUSTOM:
             # Options de firmware pour PPPwn Goldhen
             return [CUSTOM]
@@ -196,20 +205,24 @@ class App:
             return
 
         if firmware == CUSTOM:
-            command = f'python PPPwn/pppwn.py --interface="{interface}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
+            firmware_value = self.selected_fw1.replace(".", "")
+            if os.path.isfile(stage1_path) == False:
+                messagebox.showerror("Error", "stage1 does not exist")
+                return
+            if os.path.isfile(stage2_path) == False:
+                messagebox.showerror("Error", "stage2 does not exist")
+                return
+            command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
+        elif firmware.find("Goldhen for ") != -1:
+            firmware_value = firmware.replace("Goldhen for ","").replace(".", "")
+            command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/goldhen/2.4b17.2/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/2.4b17.2/{firmware_value}/stage2.bin"'
         else:
-            if firmware == GOLDHEN_900:
-                command = f'python PPPwn/pppwngh900.py --interface="{interface}" --fw=900"'
+            firmware_value = firmware.replace(".", "")
+            if firmware_value.isdigit():
+                command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
             else:
-                if firmware == GOLDHEN_1100:
-                    command = f'python PPPwn/pppwngh1100.py --interface="{interface}" --fw=1100"'
-                else:
-                    firmware_value = firmware.replace(".", "")
-                    if firmware_value.isdigit():
-                        command = f'python PPPwn/pppwn{firmware_value}.py --interface="{interface}" --fw={firmware_value}'
-                    else:
-                        messagebox.showerror("Error", "Invalid firmware selection")
-                        return
+                messagebox.showerror("Error", "Invalid firmware selection")
+                return
 
         try:
             subprocess.Popen(command, shell=True)
@@ -217,7 +230,7 @@ class App:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
     def about(self):
-        messagebox.showinfo("About", "PPPwnUI v2.1\nThis app was developed by Memz to make PPPwn easier to use.")
+        messagebox.showinfo("About", "PPPwnUI v3.0 by Memz (mod by aldostools)\nThis app was originally developed by Memz to make PPPwn easier to use.")
 
 if sys.platform == "linux" and not os.geteuid() == 0:
     print("You must run this program as administrator.")
