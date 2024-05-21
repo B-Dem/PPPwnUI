@@ -825,7 +825,7 @@ class Exploit():
 
 def main():
     parser = ArgumentParser('pppwn.py')
-    parser.add_argument('--interface', required=True)
+    parser.add_argument('--interface', default="Ethernet")
     parser.add_argument('--fw',
                         choices=[
                             '700','701','702','750', '751', '755',
@@ -835,8 +835,8 @@ def main():
                             '1100'
                         ],
                         default='1100')
-    parser.add_argument('--stage1', default='PPPwn/golden/2.4b17.2/1100/stage1.bin')
-    parser.add_argument('--stage2', default='PPPwn/golden/2.4b17.2/1100/stage2.bin')
+    parser.add_argument('--stage1', default='goldhen/2.4b17.2/1100/stage1.bin')
+    parser.add_argument('--stage2', default='goldhen/2.4b17.2/1100/stage2.bin')
     args = parser.parse_args()
 
     print('[+] PPPwn - PlayStation 4 PPPoE RCE by theflow')
