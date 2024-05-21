@@ -18,7 +18,7 @@ def get_network_interface_names():
 class App:
     def __init__(self, master):
         self.master = master
-        master.title("PPPwnUI v3.0 by Memz (mod by aldostools)")
+        master.title("PPPwnUI v3.0 by Memz")
 
         # taille de la fenêtre
         master.geometry("420x380")
@@ -28,7 +28,10 @@ class App:
         master.resizable(False, False)
 
         # logo d'application
-        master.iconbitmap("media/logo.ico")
+        if sys.platform == "linux" and not os.geteuid() == 0:
+        print("Linux Test")
+        else :
+            master.iconbitmap("media/logo.ico")
 
         self.menu = tk.Menu(master)
         master.config(menu=self.menu)
@@ -230,7 +233,7 @@ class App:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
     def about(self):
-        messagebox.showinfo("About", "PPPwnUI v3.0 by Memz (mod by aldostools)\nThis app was originally developed by Memz to make PPPwn easier to use.")
+        messagebox.showinfo("About", "PPPwnUI v3.0 by Memz \nThis app was originally developed by Memz to make PPPwn easier to use.")
 
 if sys.platform == "linux" and not os.geteuid() == 0:
     print("You must run this program as administrator.")
