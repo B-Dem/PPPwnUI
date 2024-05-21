@@ -5,7 +5,7 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Clone the repository:
 
-```git clone https://github.com/B-Dem/PPPwnUI```
+```git clone https://github.com/aldostools/PPPwnUI```
 
 - Install the requirements:
 
@@ -19,9 +19,9 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Select your Interface using the drop-down menu
 
-- Choose your Firmware (7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 or 11.00)
+- Choose your Firmware (7.00, 7.01, 7.02, 7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 or 11.00)
 
-- Or Choose the Goldhen PPPwn (9.00 & 11.00)
+- Or Choose the Goldhen PPPwn (9.00, 10.00, 10.01 & 11.00)
 
 - You can also add your own custom Payloads. 
 
@@ -138,7 +138,7 @@ On your Computer:
 - PPPwn Logs in the program directly
 - Code optimisation
 
-This Program was made with ❤️ by [Memz](https://github.com/B-Dem) for [Sighya](https://sighya.fr).
+This Program was originally made with ❤️ by [Memz](https://github.com/B-Dem) for [Sighya](https://sighya.fr).
 
 If you find this program helpful, leave a star on the repo!
 

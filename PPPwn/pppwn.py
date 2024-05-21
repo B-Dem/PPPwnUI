@@ -828,20 +828,19 @@ def main():
     parser.add_argument('--interface', required=True)
     parser.add_argument('--fw',
                         choices=[
-                            '750', '751', '755',
+                            '700','701','702','750', '751', '755',
                             '800', '801', '803', '850', '852',
                             '900', '903', '904', '950', '951', '960',
                             '1000', '1001', '1050', '1070', '1071',
                             '1100'
                         ],
                         default='1100')
-    parser.add_argument('--stage1', default='PPPwn/stage1/stage1.bin')
-    parser.add_argument('--stage2', default='PPPwn/stage2/stage2.bin')
+    parser.add_argument('--stage1', default='PPPwn/golden/2.4b17.2/1100/stage1.bin')
+    parser.add_argument('--stage2', default='PPPwn/golden/2.4b17.2/1100/stage2.bin')
     args = parser.parse_args()
 
     print('[+] PPPwn - PlayStation 4 PPPoE RCE by theflow')
     print('[+] args: ' + ' '.join(f'{k}={v}' for k, v in vars(args).items()))
-    print('[+] Using PPPwnUI created by Memz !')
 
     with open(args.stage1, mode='rb') as f:
         stage1 = f.read()
@@ -849,7 +848,9 @@ def main():
     with open(args.stage2, mode='rb') as f:
         stage2 = f.read()
 
-    if args.fw in ('750', '751', '755'):
+    if args.fw in ('700', '701', '702'):
+        offs = OffsetsFirmware_700_702()
+    elif args.fw in ('750', '751', '755'):
         offs = OffsetsFirmware_750_755()
     elif args.fw in ('800', '801', '803'):
         offs = OffsetsFirmware_800_803()
