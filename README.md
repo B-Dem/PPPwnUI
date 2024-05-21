@@ -15,7 +15,21 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Launch the app with
 
-```python PPPwnUI.py```
+  **Windows :**
+  
+  ```PPPwnUI.bat```
+
+  **Linux :**
+
+  ```sh
+  chmod +x PPPwnUI.sh
+  ```
+
+  Then :
+  
+  ```sh
+  ./PPPwnUI.sh
+  ```
 
 - Select your Interface using the drop-down menu
 
