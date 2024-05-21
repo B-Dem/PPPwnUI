@@ -28,8 +28,8 @@ class App:
         master.resizable(False, False)
 
         # logo d'application
-        if sys.platform == "linux" and not os.geteuid() == 0:
-        print("Linux Test")
+        if sys.platform == "linux":
+            pass
         else :
             master.iconbitmap("media/logo.ico")
 
@@ -50,7 +50,10 @@ class App:
 
         # Menu déroulant pour les interfaces réseau
         self.interface_var = tk.StringVar(master)
-        self.interface_var.set("Ethernet") # .set("Select an interface :") # Réseau pré-sélectionné
+        if sys.platform == "linux":
+            self.interface_var.set("Select an interface :") # Réseau pré-sélectionné
+        else:
+            self.interface_var.set("Ethernet") # .set("Select an interface :") # Réseau pré-sélectionné
         self.interface_menu = tk.OptionMenu(master, self.interface_var, *get_network_interface_names())
         self.interface_menu.pack()
 
@@ -215,14 +218,23 @@ class App:
             if os.path.isfile(stage2_path) == False:
                 messagebox.showerror("Error", "stage2 does not exist")
                 return
-            command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
+            if sys.platform == "linux":
+                command = f'python3 PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
+            else:
+                command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
         elif firmware.find("Goldhen for ") != -1:
             firmware_value = firmware.replace("Goldhen for ","").replace(".", "")
-            command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/goldhen/2.4b17.2/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/2.4b17.2/{firmware_value}/stage2.bin"'
+            if sys.platform == "linux":
+                command = f'python3 PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+            else:
+                command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
         else:
             firmware_value = firmware.replace(".", "")
             if firmware_value.isdigit():
-                command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
+                if sys.platform == "linux":
+                    command = f'python3 PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
+                else:
+                    command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
             else:
                 messagebox.showerror("Error", "Invalid firmware selection")
                 return
@@ -233,7 +245,7 @@ class App:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
     def about(self):
-        messagebox.showinfo("About", "PPPwnUI v3.0 by Memz \nThis app was originally developed by Memz to make PPPwn easier to use.")
+        messagebox.showinfo("About", "PPPwnUI v3.0 by Memz \nThis app was originally developed by Memz to make PPPwn easier to use.\nA big thank you to Aldostools for his great for on PPPwnUI !")
 
 if sys.platform == "linux" and not os.geteuid() == 0:
     print("You must run this program as administrator.")

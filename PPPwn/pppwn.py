@@ -841,6 +841,7 @@ def main():
 
     print('[+] PPPwn - PlayStation 4 PPPoE RCE by theflow')
     print('[+] args: ' + ' '.join(f'{k}={v}' for k, v in vars(args).items()))
+    print('[+] Using PPPwnUI By Memz !')
 
     with open(args.stage1, mode='rb') as f:
         stage1 = f.read()
