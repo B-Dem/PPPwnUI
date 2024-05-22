@@ -5,11 +5,15 @@ PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/T
 
 - Clone the repository:
 
-```git clone https://github.com/aldostools/PPPwnUI```
+```sh
+git clone https://github.com/aldostools/PPPwnUI
+```
 
 - Install the requirements:
 
-```pip install -r requirements.txt```
+```sh
+pip install -r requirements.txt
+```
 
 ## Usage
 
