@@ -11,6 +11,16 @@ GOLDHEN_1000 = "Goldhen for 10.00"
 GOLDHEN_1001 = "Goldhen for 10.01"
 GOLDHEN_1100 = "Goldhen for 11.00"
 
+VTX_903  = "VTX HEN for 9.03"
+VTX_1050 = "VTX HEN for 10.50"
+VTX_1070 = "VTX HEN for 10.70"
+
+LINUX_1GB = "Linux 1GB 11.00"
+LINUX_2GB = "Linux 2GB 11.00"
+LINUX_3GB = "Linux 3GB 11.00"
+LINUX_4GB = "Linux 4GB 11.00"
+
+
 def get_network_interface_names():
     interfaces = psutil.net_if_addrs()
     return interfaces.keys()
@@ -18,10 +28,10 @@ def get_network_interface_names():
 class App:
     def __init__(self, master):
         self.master = master
-        master.title("PPPwnUI v3.0 by Memz")
+        master.title("PPPwnUI v3.1 by Memz")
 
         # taille de la fenêtre
-        master.geometry("420x380")
+        master.geometry("420x400")
         #master.eval('tk::PlaceWindow . center')
 
         # Set the resizable property False
@@ -71,17 +81,41 @@ class App:
         self.goldhen_radio_button = tk.Radiobutton(self.radio_frame, text="PPPwn Goldhen", variable=self.radio_var, value="PPPwn Goldhen", command=self.update_firmware_options)
         self.goldhen_radio_button.pack(side=tk.LEFT, padx=5)
 
+        self.hen_radio_button = tk.Radiobutton(self.radio_frame, text="HEN", variable=self.radio_var, value="HEN", command=self.update_firmware_options)
+        self.hen_radio_button.pack(side=tk.LEFT, padx=5)
+
+        self.linux_radio_button = tk.Radiobutton(self.radio_frame, text="Linux", variable=self.radio_var, value="Linux", command=self.update_firmware_options)
+        self.linux_radio_button.pack(side=tk.LEFT, padx=5)
+
         self.custom_radio_button = tk.Radiobutton(self.radio_frame, text=CUSTOM, variable=self.radio_var, value=CUSTOM, command=self.update_firmware_options)
         self.custom_radio_button.pack(side=tk.LEFT, padx=5)
 
+        # Frame pour les versions d'exploit
+        self.exploit_frame = tk.Frame(master)
+        self.exploit_frame.pack(pady=10)
+
+        # Variable pour les versions d'exploit
+        self.exploit_var = tk.StringVar(master, value="PPPwn Python")
+
+        # Création des boutons radio pour les versions d'exploit
+        self.pppwn_python_radio_button = tk.Radiobutton(self.exploit_frame, text="PPPwn Python", variable=self.exploit_var, value="PPPwn Python")
+        self.pppwn_python_radio_button.pack(side=tk.LEFT, padx=5)
+
+        self.pppwn_cpp_radio_button = tk.Radiobutton(self.exploit_frame, text="PPPwn C++", variable=self.exploit_var, value="PPPwn C++")
+        self.pppwn_cpp_radio_button.pack(side=tk.LEFT, padx=5)
+
+        self.pppwn_go_radio_button = tk.Radiobutton(self.exploit_frame, text="PPPwn_GO", variable=self.exploit_var, value="PPPwn_GO")
+        self.pppwn_go_radio_button.pack(side=tk.LEFT, padx=5)
+
         # Conteneur pour les colonnes des firmwares
-        self.firmware_label = tk.Label(master, text="Choose your Firmware:")
+        self.firmware_label = tk.Label(master, text="Choose your Payload:")
         self.firmware_label.pack()
         self.columns_container = tk.Frame(master)
         self.columns_container.pack()
 
         self.selected_fw1 = "11.00"
         self.selected_fw2 = GOLDHEN_1100
+        self.selected_fw3 = VTX_1070
 
         # Firmwares avec noms des versions
         self.firmware_var = tk.StringVar(master)
@@ -148,6 +182,12 @@ class App:
             num_columns = 2
             self.firmware_var.set(CUSTOM)
             self.custom_payloads_frame.pack()
+        elif self.radio_var.get() == "HEN":
+            num_columns = 1
+            self.firmware_var.set(VTX_1070)
+        elif self.radio_var.get() == "Linux":
+            num_columns = 1
+            self.firmware_var.set(LINUX_1GB)
         else:
             self.custom_payloads_frame.pack_forget()
             if self.radio_var.get() == "PPPwn":
@@ -179,6 +219,10 @@ class App:
         elif self.radio_var.get() == "PPPwn Goldhen":
             # Options de firmware pour PPPwn Goldhen
             return [GOLDHEN_900, GOLDHEN_1000, GOLDHEN_1001, GOLDHEN_1100]
+        elif self.radio_var.get() == "HEN":
+            return [VTX_903, VTX_1050, VTX_1070]
+        elif self.radio_var.get() == "Linux":
+            return [LINUX_1GB, LINUX_2GB, LINUX_3GB, LINUX_4GB]
         elif self.radio_var.get() == CUSTOM:
             # Options de firmware pour PPPwn Goldhen
             return [CUSTOM]
@@ -202,6 +246,7 @@ class App:
     def start_pppwn(self):
         interface = self.interface_var.get()
         firmware = self.firmware_var.get()
+        exploit_version = self.exploit_var.get()
 
         stage1_path = self.stage1_path.get()
         stage2_path = self.stage2_path.get()
@@ -212,29 +257,86 @@ class App:
 
         if firmware == CUSTOM:
             firmware_value = self.selected_fw1.replace(".", "")
-            if os.path.isfile(stage1_path) == False:
-                messagebox.showerror("Error", "stage1 does not exist")
+            if not os.path.isfile(stage1_path):
+                messagebox.showerror("Error", "Stage1 does not exist")
                 return
-            if os.path.isfile(stage2_path) == False:
-                messagebox.showerror("Error", "stage2 does not exist")
+            if not os.path.isfile(stage2_path):
+                messagebox.showerror("Error", "Stage2 does not exist")
                 return
             if sys.platform == "linux":
-                command = f'python3 PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
+                command = f'python3 PPPwn/pppwn.py --interface="{interface}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
             else:
-                command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
+                command = f'python PPPwn/pppwn.py --interface="{interface}" --stage1="{stage1_path}" --stage2="{stage2_path}"'
         elif firmware.find("Goldhen for ") != -1:
             firmware_value = firmware.replace("Goldhen for ","").replace(".", "")
-            if sys.platform == "linux":
-                command = f'python3 PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
-            else:
-                command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
-        else:
+            if exploit_version == "PPPwn Python":
+                if sys.platform == "linux":
+                    command = f'python3 PPPwn/pppwn.py --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+                else:
+                    command = f'python PPPwn/pppwn.py --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+            elif exploit_version == "PPPwn C++":
+                if sys.platform == "linux":
+                    command = f'./PPPwn/pppwn_cpp --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+                else:
+                    command = f'PPPwn\\pppwn_cpp.exe --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+            elif exploit_version == "PPPwn_GO":
+                if sys.platform == "linux":
+                    command = f'./PPPwn/pppwn_go --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+                else:
+                    command = f'PPPwn\\pppwn_go.exe --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+        elif firmware.find("VTX HEN for ") != -1:
+            firmware_value = firmware.replace("VTX HEN for ","").replace(".", "")
+            if exploit_version == "PPPwn Python":
+                if sys.platform == "linux":
+                    command = f'python3 PPPwn/pppwn.py --interface="{interface}" --stage1="PPPwn/hen/{firmware_value}/stage1.bin" --stage2="PPPwn/hen/{firmware_value}/stage2.bin"'
+                else:
+                    command = f'python PPPwn/pppwn.py --interface="{interface}" --stage1="PPPwn/hen/{firmware_value}/stage1.bin" --stage2="PPPwn/hen/{firmware_value}/stage2.bin"'
+            elif exploit_version == "PPPwn C++":
+                if sys.platform == "linux":
+                    command = f'./PPPwn/pppwn_cpp --interface="{interface}" --stage1="PPPwn/hen/{firmware_value}/stage1.bin" --stage2="PPPwn/hen/{firmware_value}/stage2.bin"'
+                else:
+                    command = f'PPPwn\\pppwn_cpp.exe --interface="{interface}" --stage1="PPPwn/hen/{firmware_value}/stage1.bin" --stage2="PPPwn/hen/{firmware_value}/stage2.bin"'
+            elif exploit_version == "PPPwn_GO":
+                if sys.platform == "linux":
+                    command = f'./PPPwn/pppwn_go --fw={firmware_value} --stage1="PPPwn/hen/{firmware_value}/stage1.bin" --stage2="PPPwn/hen/{firmware_value}/stage2.bin"'
+                else:
+                    command = f'PPPwn\\pppwn_go.exe --fw={firmware_value} --stage1="PPPwn/hen/{firmware_value}/stage1.bin" --stage2="PPPwn/hen/{firmware_value}/stage2.bin"'
+        elif firmware.find("Linux") != -1:
+            firmware_value = firmware.replace("Linux ", "").replace("GB", "gb").replace(" 11.00", "")
+            stage2_file = f'PPPwn/linux/stage2-1100-{firmware_value}.bin'
+            if exploit_version == "PPPwn Python":
+                if sys.platform == "linux":
+                    command = f'python3 PPPwn/pppwn.py --interface="{interface}" --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+                else:
+                    command = f'python PPPwn/pppwn.py --interface="{interface}" --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+            elif exploit_version == "PPPwn C++":
+                if sys.platform == "linux":
+                    command = f'./PPPwn/pppwn_cpp --i "{interface}" --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+                else:
+                    command = f'PPPwn\\pppwn_cpp.exe --i={interface} --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+            elif exploit_version == "PPPwn_GO":
+                if sys.platform == "linux":
+                    command = f'./PPPwn/pppwn_go --interface="{interface}" --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+                else:
+                    command = f'PPPwn\\pppwn_go.exe --fw=1100 --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+        else: 
             firmware_value = firmware.replace(".", "")
             if firmware_value.isdigit():
-                if sys.platform == "linux":
-                    command = f'python3 PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
-                else:
-                    command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
+                if exploit_version == "PPPwn Python":
+                    if sys.platform == "linux":
+                        command = f'python3 PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
+                    else:
+                        command = f'python PPPwn/pppwn.py --interface="{interface}" --fw="{firmware_value}" --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
+                elif exploit_version == "PPPwn C++":
+                    if sys.platform == "linux":
+                        command = f'./PPPwn/pppwn_cpp --interface="{interface}" --fw="{firmware_value}"'
+                    else:
+                        command = f'PPPwn\\pppwn_cpp.exe --interface="{interface}" --fw="{firmware_value}"'
+                elif exploit_version == "PPPwn_GO":
+                    if sys.platform == "linux":
+                        command = f'./PPPwn/pppwn_go --interface="{interface}" --fw="{firmware_value}"'
+                    else:
+                        command = f'PPPwn\\pppwn_go.exe --interface="{interface}" --fw="{firmware_value}"'
             else:
                 messagebox.showerror("Error", "Invalid firmware selection")
                 return
@@ -244,8 +346,10 @@ class App:
         except subprocess.CalledProcessError as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
+
+
     def about(self):
-        messagebox.showinfo("About", "PPPwnUI v3.0 by Memz \nThis app was originally developed by Memz to make PPPwn easier to use.\nA big thank you to Aldostools for his great for on PPPwnUI !")
+        messagebox.showinfo("About", "PPPwnUI v3.1\n\nDeveloped by Memz")
 
 if sys.platform == "linux" and not os.geteuid() == 0:
     print("You must run this program as administrator.")
