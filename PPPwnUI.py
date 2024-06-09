@@ -101,8 +101,8 @@ class App:
         self.pppwn_python_radio_button = tk.Radiobutton(self.exploit_frame, text="PPPwn Python", variable=self.exploit_var, value="PPPwn Python")
         self.pppwn_python_radio_button.pack(side=tk.LEFT, padx=5)
 
-        self.pppwn_cpp_radio_button = tk.Radiobutton(self.exploit_frame, text="PPPwn C++", variable=self.exploit_var, value="PPPwn C++")
-        self.pppwn_cpp_radio_button.pack(side=tk.LEFT, padx=5)
+        # self.pppwn_cpp_radio_button = tk.Radiobutton(self.exploit_frame, text="PPPwn C++", variable=self.exploit_var, value="PPPwn C++")
+        # self.pppwn_cpp_radio_button.pack(side=tk.LEFT, padx=5)
 
         self.pppwn_go_radio_button = tk.Radiobutton(self.exploit_frame, text="PPPwn_GO", variable=self.exploit_var, value="PPPwn_GO")
         self.pppwn_go_radio_button.pack(side=tk.LEFT, padx=5)
@@ -281,7 +281,7 @@ class App:
                     command = f'PPPwn\\pppwn_cpp.exe --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
             elif exploit_version == "PPPwn_GO":
                 if sys.platform == "linux":
-                    command = f'./PPPwn/pppwn_go --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
+                    command = f'./PPPwn/pppwn_go --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
                 else:
                     command = f'PPPwn\\pppwn_go.exe --interface="{interface}" --stage1="PPPwn/goldhen/{firmware_value}/stage1.bin" --stage2="PPPwn/goldhen/{firmware_value}/stage2.bin"'
         elif firmware.find("VTX HEN for ") != -1:
