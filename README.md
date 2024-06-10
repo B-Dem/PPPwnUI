@@ -37,13 +37,22 @@ pip install -r requirements.txt
 
 - Select your Interface using the drop-down menu
 
-- Choose your Firmware (7.00, 7.01, 7.02, 7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 or 11.00)
+- Choose Between the Exploit Version you want to use ([PPPwn Python](https://github.com/TheOfficialFloW/PPPwn), [PPPwn_Go](https://github.com/BestPig/PPPwn_go) & [PPPwn_CPP](https://github.com/xfangfang/PPPwn_cpp))
 
-- Or Choose the Goldhen PPPwn (9.00, 10.00, 10.01 & 11.00)
+- Choose your Payload Between 
 
-- You can also add your own custom Payloads. 
+- PPPwn : (Available for : 7.00, 7.01, 7.02, 7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 & 11.00)
 
-- Click on **Start PPPwn** to start the Exploit
+- PPPwn Goldhen Payloads (Available for : 9.00, 10.00, 10.01 & 11.00)
+
+- VTX HEN (Available for : 9.03, 10.50 & 10.70)
+
+- PPPwn Linux Payloads (Available for : 11.00) 
+
+- Custom Payloads (Your own custom Payloads)
+ 
+
+- Then click on **Start PPPwn** to start the Exploit
 
 
 ## PPPwn Usage
@@ -152,6 +161,7 @@ On your Computer:
 ```
 ##### To do : 
 
+- Rebuild PPPwn_CPP to use Interface Name and not ID  
 - Auto Updater
 - PPPwn Logs in the program directly
 - Code optimisation
