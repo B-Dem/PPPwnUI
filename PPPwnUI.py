@@ -12,8 +12,10 @@ GOLDHEN_1001 = "Goldhen for 10.01"
 GOLDHEN_1100 = "Goldhen for 11.00"
 
 VTX_903  = "VTX HEN for 9.03"
+VTX_904 = "VTX HEN for 9.04"
 VTX_1050 = "VTX HEN for 10.50"
 VTX_1070 = "VTX HEN for 10.70"
+VTX_1071 = "VTX HEN for 10.71"
 
 LINUX_1GB = "Linux 1GB 11.00"
 LINUX_2GB = "Linux 2GB 11.00"
@@ -117,7 +119,7 @@ class App:
 
         self.selected_fw1 = "11.00"
         self.selected_fw2 = GOLDHEN_1100
-        self.selected_fw3 = VTX_1070
+        self.selected_fw3 = VTX_1071
 
         # Firmwares avec noms des versions
         self.firmware_var = tk.StringVar(master)
@@ -186,7 +188,7 @@ class App:
             self.custom_payloads_frame.pack()
         elif self.radio_var.get() == "HEN":
             num_columns = 1
-            self.firmware_var.set(VTX_1070)
+            self.firmware_var.set(VTX_1071)
             self.custom_payloads_frame.pack_forget()
         elif self.radio_var.get() == "Linux":
             num_columns = 1
@@ -224,7 +226,7 @@ class App:
             # Options de firmware pour PPPwn Goldhen
             return [GOLDHEN_900, GOLDHEN_1000, GOLDHEN_1001, GOLDHEN_1100]
         elif self.radio_var.get() == "HEN":
-            return [VTX_903, VTX_1050, VTX_1070]
+            return [VTX_903, VTX_904, VTX_1050, VTX_1070, VTX_1071]
         elif self.radio_var.get() == "Linux":
             return [LINUX_1GB, LINUX_2GB, LINUX_3GB, LINUX_4GB]
         elif self.radio_var.get() == CUSTOM:
@@ -331,7 +333,7 @@ class App:
                     command = f'PPPwn\\pppwn_cpp.exe --i={interface} --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
             elif exploit_version == "PPPwn_GO":
                 if sys.platform == "linux":
-                    command = f'./PPPwn/pppwn_go --interface="{interface}" --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+                    command = f'./PPPwn/pppwn_go --fw=1100 --interface="{interface}" --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
                 else:
                     command = f'PPPwn\\pppwn_go.exe --fw=1100 --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
         else: 
@@ -349,7 +351,7 @@ class App:
                         command = f'PPPwn\\pppwn_cpp.exe --interface="{interface}" --fw="{firmware_value} --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
                 elif exploit_version == "PPPwn_GO":
                     if sys.platform == "linux":
-                        command = f'./PPPwn/pppwn_go -fw="{firmware_value} --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
+                        command = f'./PPPwn/pppwn_go --fw={firmware_value} --stage1="PPPwn/stage1/{firmware_value}/stage1.bin" --stage2="PPPwn/stage2/{firmware_value}/stage2.bin"'
                     else:
                         command = f'PPPwn\\pppwn_go.exe --fw={firmware_value} --stage1=PPPwn/stage1/{firmware_value}/stage1.bin  --stage2=PPPwn/stage2/{firmware_value}/stage2.bin'
             else:
