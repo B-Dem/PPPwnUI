@@ -17,8 +17,14 @@ GOLDHEN_1070 = "Goldhen for 10.70"
 GOLDHEN_1071 = "Goldhen for 10.71"
 GOLDHEN_1100 = "Goldhen for 11.00"
 
-VTX_903  = "VTX HEN for 9.03"
+VTX_800 = "VTX HEN for 8.00"
+VTX_803 = "VTX HEN for 8.03"
+VTX_850 = "VTX HEN for 8.50"
+VTX_852 = "VTX HEN for 8.52"
+VTX_903 = "VTX HEN for 9.03"
 VTX_904 = "VTX HEN for 9.04"
+VTX_1000 = "VTX HEN for 10.00"
+VTX_1001 = "VTX HEN for 10.01"
 VTX_1050 = "VTX HEN for 10.50"
 VTX_1070 = "VTX HEN for 10.70"
 VTX_1071 = "VTX HEN for 10.71"
@@ -240,7 +246,7 @@ class App:
             return [GOLDHEN_900, GOLDHEN_950, GOLDHEN_951, GOLDHEN_960, GOLDHEN_1000, 
                     GOLDHEN_1001, GOLDHEN_1050, GOLDHEN_1070, GOLDHEN_1071, GOLDHEN_1100]
         elif self.radio_var.get() == "HEN":
-            return [VTX_903, VTX_904, VTX_1050, VTX_1070, VTX_1071, VTX_1100]
+            return [VTX_800, VTX_803, VTX_850, VTX_852, VTX_903, VTX_904, VTX_1000, VTX_1001, VTX_1050, VTX_1070, VTX_1071, VTX_1100]
         elif self.radio_var.get() == "Linux":
             return [LINUX_1GB, LINUX_2GB, LINUX_3GB, LINUX_4GB]
         elif self.radio_var.get() == CUSTOM:
