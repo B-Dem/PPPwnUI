@@ -7,6 +7,7 @@ import sys
 
 CUSTOM = "Custom"
 GOLDHEN_900 = "Goldhen for 9.00"
+GOLDHEN_960 = "Goldhen for 9.60"
 GOLDHEN_1000 = "Goldhen for 10.00"
 GOLDHEN_1001 = "Goldhen for 10.01"
 GOLDHEN_1100 = "Goldhen for 11.00"
@@ -224,7 +225,7 @@ class App:
                     "10.00", "10.01", "10.50", "10.70", "10.71", "11.00"]
         elif self.radio_var.get() == "PPPwn Goldhen":
             # Options de firmware pour PPPwn Goldhen
-            return [GOLDHEN_900, GOLDHEN_1000, GOLDHEN_1001, GOLDHEN_1100]
+            return [GOLDHEN_900, GOLDHEN_960, GOLDHEN_1000, GOLDHEN_1001, GOLDHEN_1100]
         elif self.radio_var.get() == "HEN":
             return [VTX_903, VTX_904, VTX_1050, VTX_1070, VTX_1071]
         elif self.radio_var.get() == "Linux":
