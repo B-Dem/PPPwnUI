@@ -1,7 +1,7 @@
 # PPPwnUI
-PPPwnUI is a program that adds an UI to the exploit [PPPwn](https://github.com/TheOfficialFloW/PPPwn/) created by [TheFlow](https://github.com/TheOfficialFloW/).
+PPPwnUI is a program made in Python that adds an UI to the exploit [PPPwn](https://github.com/TheOfficialFloW/PPPwn/) created by [TheFlow](https://github.com/TheOfficialFloW/).
 
-## Installation
+## Installation :
 
 - Clone the repository:
 
@@ -15,7 +15,7 @@ git clone https://github.com/B-Dem/PPPwnUI
 pip install -r requirements.txt
 ```
 
-## Usage
+## Usage :
 
 - Launch the app with
 
@@ -39,23 +39,23 @@ pip install -r requirements.txt
 
 - Choose Between the Exploit Version you want to use ([PPPwn Python](https://github.com/TheOfficialFloW/PPPwn), [PPPwn_Go](https://github.com/BestPig/PPPwn_go) & [PPPwn_CPP](https://github.com/xfangfang/PPPwn_cpp))
 
-- Choose your Payload Between 
+- Choose your Payload Between :
 
-- PPPwn : (Available for : 7.00, 7.01, 7.02, 7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 & 11.00)
+- **PPPwn** : (Available for : 7.00, 7.01, 7.02, 7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 & 11.00)
 
-- PPPwn Goldhen Payloads (Available for : 9.00, 10.00, 10.01 & 11.00)
+- **PPPwn Goldhen** Payloads : (Available for : 9.00, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 & 11.00)
 
-- VTX HEN (Available for : 9.03, 10.50 & 10.70)
+- **VTX HEN** : (Available for : 9.03, 9.04, 10.50, 10.70, 10.71 & 11.00)
 
-- PPPwn Linux Payloads (Available for : 11.00) 
+- **PPPwn Linux Payloads** : (Available for : 11.00) 
 
-- Custom Payloads (Your own custom Payloads)
+- **Custom Payloads** : (Your own custom Payloads)
  
 
 - Then click on **Start PPPwn** to start the Exploit
 
 
-## PPPwn Usage
+## PPPwn Usage :
 
 On your PS4:
 
@@ -69,13 +69,13 @@ On your PS4:
 
 If the exploit fails or the PS4 crashes, you can skip the internet setup and simply click on `Test Internet Connection`. If the script fail or is stuck waiting for a request/response, abort it and run it again on your computer, and then click on `Test Internet Connection` on your PS4.
 
-### Goldhen Usage
+## Goldhen Usage :
 
 On your Computer: 
 
 - Copy `goldhen.bin` to the root directory of an exfat/fat32 USB and insert it into your PS4.
 
-#### Example run
+## Example run : 
 
 ```sh
 [+] PPPwn - PlayStation 4 PPPoE RCE by theflow
@@ -159,12 +159,11 @@ On your Computer:
 [*] Sending stage2 payload...
 [+] Done!
 ```
-##### To do : 
+
+## To do : 
 
 - Rebuild PPPwn_CPP to use Interface Name and not ID  
 - Auto Updater
-- PPPwn Logs in the program directly
-- Code optimisation
 
 This Program was originally made with ❤️ by [Memz](https://github.com/B-Dem) for [Sighya](https://sighya.fr).
 
