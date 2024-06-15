@@ -7,9 +7,14 @@ import sys
 
 CUSTOM = "Custom"
 GOLDHEN_900 = "Goldhen for 9.00"
+GOLDHEN_950 = "Goldhen for 9.50"
+GOLDHEN_951 = "Goldhen for 9.51"
 GOLDHEN_960 = "Goldhen for 9.60"
 GOLDHEN_1000 = "Goldhen for 10.00"
 GOLDHEN_1001 = "Goldhen for 10.01"
+GOLDHEN_1050 = "Goldhen for 10.50"
+GOLDHEN_1070 = "Goldhen for 10.70"
+GOLDHEN_1071 = "Goldhen for 10.71"
 GOLDHEN_1100 = "Goldhen for 11.00"
 
 VTX_903  = "VTX HEN for 9.03"
@@ -17,6 +22,7 @@ VTX_904 = "VTX HEN for 9.04"
 VTX_1050 = "VTX HEN for 10.50"
 VTX_1070 = "VTX HEN for 10.70"
 VTX_1071 = "VTX HEN for 10.71"
+VTX_1100 = "VTX HEN for 11.00"
 
 LINUX_1GB = "Linux 1GB 11.00"
 LINUX_2GB = "Linux 2GB 11.00"
@@ -33,7 +39,7 @@ def get_network_interface_names():
 class App:
     def __init__(self, master):
         self.master = master
-        master.title("PPPwnUI v3.1 by Memz")
+        master.title("PPPwnUI v4.0 by Memz")
 
         # taille de la fenêtre
         master.geometry("420x400")
@@ -50,6 +56,7 @@ class App:
 
         self.menu = tk.Menu(master)
         master.config(menu=self.menu)
+        master.bind('<Return>', self.button_click)
 
         self.file_menu = tk.Menu(self.menu, tearoff=0)
         self.menu.add_cascade(label="File", menu=self.file_menu)
@@ -161,6 +168,7 @@ class App:
         self.start_button.pack(side=tk.BOTTOM, pady=10)
         self.start_button.focus()
 
+        self.read_last_options()
         self.update_firmware_options()  # Mettre à jour les options de firmware initiales
 
     def update_firmware_options(self):
@@ -188,7 +196,7 @@ class App:
             self.firmware_var.set(CUSTOM)
             self.custom_payloads_frame.pack()
         elif self.radio_var.get() == "HEN":
-            num_columns = 1
+            num_columns = 2
             self.firmware_var.set(VTX_1071)
             self.custom_payloads_frame.pack_forget()
         elif self.radio_var.get() == "Linux":
@@ -201,13 +209,17 @@ class App:
                 num_columns = 3
                 self.firmware_var.set(i1_00)
             else:
-                num_columns = 1
+                num_columns = 2
                 self.firmware_var.set(GOLDHEN_1100)
 
         column_widgets = []
-        for firmware in firmware_versions:
-            radio_button = tk.Radiobutton(self.columns_container, text=firmware, variable=self.firmware_var, value=firmware, command=self.show_payload_options)
-            column_widgets.append(radio_button)
+        if self.radio_var.get() == CUSTOM:
+            no_label = tk.Label(self.columns_container, text="")
+            column_widgets.append(no_label)
+        else:
+            for firmware in firmware_versions:
+                radio_button = tk.Radiobutton(self.columns_container, text=firmware, variable=self.firmware_var, value=firmware, command=self.show_payload_options)
+                column_widgets.append(radio_button)
 
         for i, widget in enumerate(column_widgets):
             column_index = i % num_columns
@@ -225,9 +237,10 @@ class App:
                     "10.00", "10.01", "10.50", "10.70", "10.71", "11.00"]
         elif self.radio_var.get() == "PPPwn Goldhen":
             # Options de firmware pour PPPwn Goldhen
-            return [GOLDHEN_900, GOLDHEN_960, GOLDHEN_1000, GOLDHEN_1001, GOLDHEN_1100]
+            return [GOLDHEN_900, GOLDHEN_950, GOLDHEN_951, GOLDHEN_960, GOLDHEN_1000, 
+                    GOLDHEN_1001, GOLDHEN_1050, GOLDHEN_1070, GOLDHEN_1071, GOLDHEN_1100]
         elif self.radio_var.get() == "HEN":
-            return [VTX_903, VTX_904, VTX_1050, VTX_1070, VTX_1071]
+            return [VTX_903, VTX_904, VTX_1050, VTX_1070, VTX_1071, VTX_1100]
         elif self.radio_var.get() == "Linux":
             return [LINUX_1GB, LINUX_2GB, LINUX_3GB, LINUX_4GB]
         elif self.radio_var.get() == CUSTOM:
@@ -250,6 +263,37 @@ class App:
         stage2_file = filedialog.askopenfilename()
         self.stage2_path.set(stage2_file)
 
+    def read_line(self, f):
+        return f.readline().replace('\n','')
+    
+    def read_last_options(self):
+        if os.path.isfile("PPPwnUI.ini"):
+            f = open("PPPwnUI.ini", "r")
+            self.interface_var.set(self.read_line(f))
+            self.exploit_var.set(self.read_line(f))
+            self.radio_var.set(self.read_line(f))
+            self.selected_fw1 = self.read_line(f)
+            self.selected_fw2 = self.read_line(f)
+            self.stage1_path.set(self.read_line(f))
+            self.stage2_path.set(self.read_line(f))
+            self.firmware_var.set(self.read_line(f))
+            f.close()
+
+    def save_last_options(self, interface, firmware, exploit_version):
+        f = open("PPPwnUI.ini", "w")
+        f.write(interface + '\n')
+        f.write(exploit_version + '\n')
+        f.write(self.radio_var.get() + '\n') 
+        f.write(self.selected_fw1 + '\n')
+        f.write(self.selected_fw2 + '\n')
+        f.write(self.stage1_path.get() + '\n')
+        f.write(self.stage2_path.get() + '\n')
+        f.write(firmware + '\n')
+        f.close()
+
+    def button_click(self, event):
+        self.start_pppwn()
+
     def start_pppwn(self):
         interface = self.interface_var.get()
         firmware = self.firmware_var.get()
@@ -261,6 +305,8 @@ class App:
         if interface == "Select an interface :":
             messagebox.showerror("Error", "Select a network interface")
             return
+
+        self.save_last_options(interface, firmware, exploit_version)
 
         if firmware == CUSTOM:
             firmware_value = self.selected_fw1.replace(".", "")
@@ -334,7 +380,7 @@ class App:
                     command = f'PPPwn\\pppwn_cpp.exe --i={interface} --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
             elif exploit_version == "PPPwn_GO":
                 if sys.platform == "linux":
-                    command = f'./PPPwn/pppwn_go --fw=1100 --interface="{interface}" --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
+                    command = f'./PPPwn/pppwn_go --fw=1100 --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
                 else:
                     command = f'PPPwn\\pppwn_go.exe --fw=1100 --stage1="PPPwn/linux/stage1-1100.bin" --stage2="{stage2_file}"'
         else: 
@@ -367,7 +413,7 @@ class App:
 
 
     def about(self):
-        messagebox.showinfo("About", "PPPwnUI v3.1\n\nDeveloped by Memz")
+        messagebox.showinfo("About", "PPPwnUI v4.0\n\nDeveloped by Memz")
 
 if sys.platform == "linux" and not os.geteuid() == 0:
     print("You must run this program as administrator.")
