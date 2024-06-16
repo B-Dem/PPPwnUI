@@ -42,7 +42,7 @@ def get_network_interface_names():
 class App:
     def __init__(self, master):
         self.master = master
-        master.title("PPPwnUI v4.0 by Memz")
+        master.title("PPPwnUI v4.1 by Memz")
 
         # taille de la fenêtre
         master.geometry("420x400")
@@ -416,7 +416,7 @@ class App:
 
 
     def about(self):
-        messagebox.showinfo("About", "PPPwnUI v4.0\n\nDeveloped by Memz")
+        messagebox.showinfo("About", "PPPwnUI v4.1\n\nDeveloped by Memz")
 
 if sys.platform == "linux" and not os.geteuid() == 0:
     print("You must run this program as administrator.")
