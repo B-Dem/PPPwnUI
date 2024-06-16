@@ -7,20 +7,17 @@ import sys
 
 CUSTOM = "Custom"
 GOLDHEN_900 = "Goldhen for 9.00"
-GOLDHEN_950 = "Goldhen for 9.50"
-GOLDHEN_951 = "Goldhen for 9.51"
 GOLDHEN_960 = "Goldhen for 9.60"
 GOLDHEN_1000 = "Goldhen for 10.00"
 GOLDHEN_1001 = "Goldhen for 10.01"
-GOLDHEN_1050 = "Goldhen for 10.50"
-GOLDHEN_1070 = "Goldhen for 10.70"
-GOLDHEN_1071 = "Goldhen for 10.71"
 GOLDHEN_1100 = "Goldhen for 11.00"
 
+VTX_755 = "VTX HEN for 7.55"
 VTX_800 = "VTX HEN for 8.00"
 VTX_803 = "VTX HEN for 8.03"
 VTX_850 = "VTX HEN for 8.50"
 VTX_852 = "VTX HEN for 8.52"
+VTX_900 = "VTX HEN for 9.00"
 VTX_903 = "VTX HEN for 9.03"
 VTX_904 = "VTX HEN for 9.04"
 VTX_1000 = "VTX HEN for 10.00"
@@ -215,7 +212,7 @@ class App:
                 num_columns = 3
                 self.firmware_var.set(i1_00)
             else:
-                num_columns = 2
+                num_columns = 1
                 self.firmware_var.set(GOLDHEN_1100)
 
         column_widgets = []
@@ -243,11 +240,11 @@ class App:
                     "10.00", "10.01", "10.50", "10.70", "10.71", "11.00"]
         elif self.radio_var.get() == "PPPwn Goldhen":
             # Options de firmware pour PPPwn Goldhen
-            return [GOLDHEN_900, GOLDHEN_950, GOLDHEN_951, GOLDHEN_960, GOLDHEN_1000, 
-                    GOLDHEN_1001, GOLDHEN_1050, GOLDHEN_1070, GOLDHEN_1071, GOLDHEN_1100]
+            return [GOLDHEN_900, GOLDHEN_960, GOLDHEN_1000, 
+                    GOLDHEN_1001, GOLDHEN_1100]
         elif self.radio_var.get() == "HEN":
-            return [VTX_800, VTX_803, VTX_850, VTX_852, VTX_903, VTX_904, VTX_1000, VTX_1001, VTX_1050, VTX_1070, VTX_1071, VTX_1100]
-        elif self.radio_var.get() == "Linux":
+            return [VTX_755, VTX_800, VTX_803, VTX_850, VTX_852, VTX_900, VTX_903, VTX_904, VTX_1000, VTX_1001, VTX_1050, VTX_1070, VTX_1071, VTX_1100]
+        elif self.radio_var.get() == "Linux":   
             return [LINUX_1GB, LINUX_2GB, LINUX_3GB, LINUX_4GB]
         elif self.radio_var.get() == CUSTOM:
             # Options de firmware pour PPPwn Goldhen
