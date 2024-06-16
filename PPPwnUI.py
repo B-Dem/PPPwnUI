@@ -130,7 +130,7 @@ class App:
 
         self.selected_fw1 = "11.00"
         self.selected_fw2 = GOLDHEN_1100
-        self.selected_fw3 = VTX_1071
+        self.selected_fw3 = VTX_1100
 
         # Firmwares avec noms des versions
         self.firmware_var = tk.StringVar(master)
@@ -200,7 +200,7 @@ class App:
             self.custom_payloads_frame.pack()
         elif self.radio_var.get() == "HEN":
             num_columns = 2
-            self.firmware_var.set(VTX_1071)
+            self.firmware_var.set(VTX_1100)
             self.custom_payloads_frame.pack_forget()
         elif self.radio_var.get() == "Linux":
             num_columns = 1
