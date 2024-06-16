@@ -37,22 +37,22 @@ pip install -r requirements.txt
 
 - Select your Interface using the drop-down menu
 
-- Choose Between the Exploit Version you want to use ([PPPwn Python](https://github.com/TheOfficialFloW/PPPwn), [PPPwn_Go](https://github.com/BestPig/PPPwn_go) & [PPPwn_CPP](https://github.com/xfangfang/PPPwn_cpp))
+- Choose Between the Exploit Version you want to use ([PPPwn Python](https://github.com/TheOfficialFloW/PPPwn), [PPPwn_Go](https://github.com/BestPig/PPPwn_go))
 
 - Choose your Payload Between :
 
 - **PPPwn** : (Available for : 7.00, 7.01, 7.02, 7.50, 7.51, 7.55, 8.00, 8.01, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 & 11.00)
 
-- **PPPwn Goldhen** Payloads : (Available for : 9.00, 9.50, 9.51, 9.60, 10.00, 10.01, 10.50, 10.70, 10.71 & 11.00)
+- **PPPwn Goldhen** Payloads : (Available for : 9.00, 9.60, 10.00, 10.01 & 11.00)
 
-- **VTX HEN** : (Available for : 9.03, 9.04, 10.50, 10.70, 10.71 & 11.00)
+- **VTX HEN** : (Available for : 7.55, 8.00, 8.03, 8.50, 8.52, 9.00, 9.03, 9.04, 10.00, 10.01 10.50, 10.70, 10.71 & 11.00)
 
 - **PPPwn Linux Payloads** : (Available for : 11.00) 
 
 - **Custom Payloads** : (Your own custom Payloads)
  
 
-- Then click on **Start PPPwn** to start the Exploit
+- Then click on **Start PPPwn** to start the Exploit.
 
 
 ## PPPwn Usage :
@@ -80,6 +80,7 @@ On your Computer:
 ```sh
 [+] PPPwn - PlayStation 4 PPPoE RCE by theflow
 [+] args: interface=enp0s3 fw=1100 stage1=stage1/stage1.bin stage2=stage2/stage2.bin
+[+] Using PPPwnUI By Memz !
 
 [+] STAGE 0: Initialization
 [*] Waiting for PADI...
